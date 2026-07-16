@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - PetHaven</title>
+    <!-- Favicon Placeholder -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/194/194279.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+        extend: {
+            fontFamily: {
+            display: ['"Quicksand"', 'sans-serif'],
+            body: ['"Nunito"', 'sans-serif'],
+            },
+            fontWeight: {
+            regular: '400',
+            medium: '500',
+            semibold: '600',
+            bold: '700',
+            extrabold: '800'
+            }
+        }
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Playful, modern fonts suitable for a pet shop -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === RESET & CORE === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-logo {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* === THEME VARIABLES (Pet Shop Palette) === */
+        :root {
+            --bg-color: #FAFAFA; 
+            --bg-secondary: #F3F4F6; 
+            --bg-card: #FFFFFF; 
+            --bg-inverted: #1F2937; 
+            --text-main: #1F2937; 
+            --text-muted: #6B7280;
+            --accent-color: #F97316; /* Vibrant Orange */
+            --accent-dark: #EA580C;  
+            --border-color: #E5E7EB;
+            --nav-bg: #FAFAFA;
+            --drawer-bg: rgba(250, 250, 250, 0.98);
+            --menu-hover-bg: rgba(249, 115, 22, 0.08); 
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            --bg-color: #000000; 
+            --bg-secondary: #111111; 
+            --bg-card: #1A1A1A; 
+            --bg-inverted: #050505; 
+            --text-main: #F9FAFB; 
+            --text-muted: #9CA3AF;
+            --accent-color: #E5E5E5; 
+            --accent-dark: #A3A3A3; 
+            --border-color: #333333;
+            --nav-bg: #000000;
+            --drawer-bg: rgba(0, 0, 0, 0.98);
+            --menu-hover-bg: rgba(255, 255, 255, 0.1); 
+        }
+        
+        /* Contrast Fixes for Dark Mode Accent Colors */
+        body.dark-mode .btn-solid,
+        body.dark-mode .bg-\[var\(--accent-color\)\] {
+            color: #000000 !important;
+        }
+        body.dark-mode .btn-solid *,
+        body.dark-mode .bg-\[var\(--accent-color\)\] * {
+            color: #000000 !important;
+        }
+        body.dark-mode .btn-outline:hover,
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover {
+            color: #000000 !important;
+        }
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover * {
+            color: #000000 !important;
+        }
+
+        /* RTL SUPPORT */
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
+        [dir="rtl"] .mr-auto { margin-left: auto; margin-right: 0; }
+
+        @keyframes subtleZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+        .animate-zoom { animation: subtleZoom 25s infinite alternate ease-in-out; }
+
+        /* === NAVBAR DESIGN === */
+        .navbar { 
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: var(--nav-bg); 
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 32px; height: 90px; display: flex; align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .navbar.scrolled { 
+            height: 75px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); 
+            background: var(--drawer-bg);
+            backdrop-filter: blur(10px);
+        }
+        body.dark-mode .navbar.scrolled { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8); }
+        
+        .nav-link { 
+            position: relative; padding: 10px 20px; margin: 0 4px; color: var(--text-main); 
+            text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 1px; transition: all 0.3s ease; display: inline-flex; 
+            align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+        }
+        
+        /* Playful Underline Effect */
+        .nav-link::after { 
+            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px; border-radius: 3px;
+            background: var(--accent-color); transition: all 0.3s ease; transform: translateX(-50%);
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 60%; }
+        .nav-link:hover, .nav-link.active { color: var(--accent-color); }
+        
+        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
+        .dropdown-menu { position: absolute; top: 70px; left: 0; transform: translateY(15px); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; }
+        .navbar.scrolled .dropdown-menu { top: 60px; }
+        .dropdown-inner { 
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
+            min-width: 220px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); 
+            padding: 8px 0; display: flex; flex-direction: column; overflow: hidden;
+        }
+        body.dark-mode .dropdown-inner { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        .dropdown-item { 
+            display: block; padding: 12px 24px; color: var(--text-main); text-decoration: none; 
+            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; 
+            transition: all 0.3s; text-align: left; white-space: nowrap; 
+        }
+        .dropdown-item:hover { background: var(--menu-hover-bg); color: var(--accent-color); padding-left: 28px; }
+        [dir="rtl"] .dropdown-item:hover { padding-left: 24px; padding-right: 28px; }
+
+        /* PILL TOGGLE */
+        .theme-toggle-pill { width: 52px; height: 28px; background: var(--bg-secondary); border-radius: 30px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; border: 1px solid var(--border-color); }
+        .theme-toggle-pill i { font-size: 10px; z-index: 1; }
+        .theme-toggle-pill .fa-sun { color: #F97316; }
+        .theme-toggle-pill .fa-moon { color: #6B7280; }
+        .theme-toggle-pill .thumb { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2; border: 1px solid var(--border-color);}
+        body.dark-mode .theme-toggle-pill .thumb { transform: translateX(24px); background: #374151; border-color: var(--border-color); }
+
+        /* RTL BUTTON STYLE */
+        .rtl-btn-style {
+            width: 44px; height: 28px; background: var(--bg-secondary); border-radius: 6px; border: 1px solid var(--border-color);
+            display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; cursor: pointer;
+            color: var(--text-main); transition: all 0.3s ease; font-family: 'Nunito', sans-serif;
+        }
+        .rtl-btn-style:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+
+        /* === BUTTON DESIGN === */
+        .btn { 
+            padding: 14px 32px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; 
+            transition: all 0.4s ease; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; 
+            border: 2px solid transparent; border-radius: 50px; font-family: 'Nunito', sans-serif;
+        }
+        .btn-solid { background: var(--accent-color); color: #FFFFFF !important; }
+        .btn-solid:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--accent-color); }
+        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color) !important; transform: translateY(-2px); }
+
+        /* MOBILE OVERLAY & DRAWER */
+        .drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(4px); }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+
+        .fullscreen-menu { 
+            position: fixed; top: 0; right: 0; width: 100%; max-width: 420px; height: 100dvh; background: var(--drawer-bg); z-index: 1001; display: flex; flex-direction: column; 
+            opacity: 0; visibility: hidden; transform: translateX(100%); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid var(--border-color);
+        }
+        [dir="rtl"] .fullscreen-menu { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--border-color); }
+        .fullscreen-menu.active { opacity: 1; visibility: visible; transform: translateX(0); }
+        
+        .mobile-link { display: block; width: 100%; padding: 18px 32px; font-size: 1.1rem; font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--text-main); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid var(--border-color); }
+        .mobile-link:hover { color: var(--accent-color); padding-left: 40px; background: var(--menu-hover-bg); }
+        [dir="rtl"] .mobile-link:hover { padding-left: 32px; padding-right: 40px; }
+
+        /* FOOTER */
+        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding-top: 80px; }
+        footer h4 { color: var(--text-main); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 24px; } 
+        footer a, footer li, footer span { color: var(--text-muted); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; font-weight: 500; }
+        footer a:hover { color: var(--accent-color); }
+        .social-link-circle { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: var(--text-main); background: var(--bg-card); }
+        .social-link-circle:hover { background: var(--accent-color); border-color: var(--accent-color); color: #FFFFFF; transform: translateY(-3px); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding: 32px 0; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <!-- ==============================================
+         1. NAVBAR
+    =============================================== -->
+    <nav class="navbar" id="main-nav">
+        <div class="w-full flex items-center justify-between max-w-[1440px] mx-auto">
+            <div class="flex items-center">
+                <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                    <i class="fas fa-paw text-[28px]"></i> PetHaven
+                </a>
+            </div>
+            
+            <div class="hidden xl:flex justify-center items-center flex-1">
+                <div class="dropdown">
+                    <div class="nav-link active">Home <i class="fas fa-chevron-down text-[10px] ml-1 opacity-80"></i></div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-inner">
+                            <a href="index.html" class="dropdown-item">Home Page 1</a>
+                            <a href="home-2.html" class="dropdown-item">Home Page 2</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+
+            <div class="hidden xl:flex items-center gap-5">
+                <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
+                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div>
+                </div>
+                <button id="rtl-btn" class="rtl-btn-style" title="Toggle LTR/RTL">LTR</button>
+                <div class="w-px h-6 bg-[var(--border-color)] mx-1"></div>
+                <a href="login.html" class="btn btn-solid !py-2.5 !px-6 !text-[11px]">Login</a>
+            </div>
+
+            <div class="xl:hidden flex items-center justify-end gap-4">
+                <button id="mobile-btn" class="text-2xl text-[var(--text-main)] transition-colors hover:text-[var(--accent-color)]">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==============================================
+         2. HAMBURGER / MOBILE DRAWER
+    =============================================== -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <div class="fullscreen-menu" id="fullscreen-menu">
+        <div class="w-full px-8 py-8 flex justify-between items-center shrink-0 border-b border-[var(--border-color)]">
+            <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                <i class="fas fa-paw"></i> PetHaven
+            </a>
+            <button id="close-menu" class="w-10 h-10 flex items-center justify-center transition-all text-2xl text-[var(--text-main)] hover:text-[var(--accent-color)]">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="flex flex-col w-full overflow-y-auto flex-1 py-4">
+            <a href="index.html" class="mobile-link" style="color: var(--accent-color);">Home Page 1</a>
+            <a href="home-2.html" class="mobile-link">Home Page 2</a>
+            <a href="about.html" class="mobile-link">About</a>
+            <a href="services.html" class="mobile-link">Services</a>
+            <a href="pricing.html" class="mobile-link">Pricing</a>
+            <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="faq.html" class="mobile-link">FAQ</a>
+            <a href="contact.html" class="mobile-link">Contact</a>
+        </div>
+
+        <div class="w-full px-8 py-8 border-t border-[var(--border-color)] flex flex-col gap-6 shrink-0 bg-[var(--bg-secondary)]">
+            <div class="flex justify-between items-center w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-bold text-[11px] uppercase tracking-widest">Theme</span>
+                    <div id="theme-toggle-mobile" class="theme-toggle-pill"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div></div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-bold text-[11px] uppercase tracking-widest">Dir</span>
+                    <button id="rtl-toggle-mobile" class="rtl-btn-style">LTR</button>
+                </div>
+            </div>
+            <div class="flex gap-4 w-full">
+                <a href="login.html" class="btn btn-outline flex-1 !py-3">Login</a>
+                <a href="register.html" class="btn btn-solid flex-1 !py-3">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==============================================
+         3. HERO BANNER
+    =============================================== -->
+    <section class="relative w-full h-[80dvh] min-h-[600px] pt-20 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)]">
+        <div class="absolute inset-0 z-0 bg-black">
+            <!-- Customized Hero Image for Home -->
+            <img src="Images/petimg (2).jpg" alt="Happy dogs running" class="w-full h-full object-cover animate-zoom opacity-60" />
+            <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-[var(--bg-color)]"></div>
+        </div>
+
+        <div class="max-w-[1000px] mx-auto px-6 w-full flex flex-col items-center justify-center text-center relative z-10 mt-12">
+            <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-6 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+                <i class="fas fa-bone mr-2 text-[12px]"></i> Premium Pet Care
+            </span>
+            
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 text-white drop-shadow-lg">
+                Everything Your <br class="hidden sm:block">
+                <span class="text-[var(--accent-color)]">Pet Dreams Of</span>.
+            </h1>
+            
+            <p class="text-gray-200 text-lg md:text-xl leading-relaxed max-w-2xl font-medium mb-10 drop-shadow-md">
+                Discover top-quality food, engaging toys, and cozy accessories to ensure your furry, feathered, or scaled friends live their very best lives.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto">
+                <a href="services.html" class="btn btn-solid !py-4 !px-12 text-[14px]">
+                    <i class="fas fa-shopping-bag mr-2"></i> Shop Now
+                </a>
+                <a href="about.html" class="btn btn-outline !border-[var(--text-main)] !text-[var(--text-main)] hover:!bg-[var(--text-main)] hover:!text-[var(--bg-color)] !py-4 !px-12 text-[14px]">
+                    <i class="fas fa-info-circle mr-2"></i> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         4. MAIN CONTENT AREA (5 SECTIONS) 
+    =============================================== -->
+    <main class="w-full bg-[var(--bg-color)] flex flex-col">
+        
+        <!-- ==============================================
+             SECTION 1: FEATURES / WHY CHOOSE US
+        =============================================== -->
+        <section class="w-full py-24 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">
+                        Our Guarantees
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text-main)] mb-6">
+                        Why Choose PetHaven
+                    </h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] rounded-full mx-auto"></div>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Feature 1 -->
+                    <div class="bg-[var(--bg-card)] p-8 rounded-2xl shadow-sm border border-[var(--border-color)] hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 rounded-full bg-[var(--menu-hover-bg)] flex items-center justify-center mb-6 group-hover:bg-[var(--accent-color)] transition-colors duration-300">
+                            <i class="fas fa-truck text-2xl text-[var(--accent-color)] group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Free Shipping</h3>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
+                            Enjoy absolutely free shipping on all orders over $49. We deliver your pet's favorites directly to your door, fast and securely.
+                        </p>
+                        <a href="#" class="text-[var(--accent-color)] text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                            Read Policy <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-[var(--bg-card)] p-8 rounded-2xl shadow-sm border border-[var(--border-color)] hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 rounded-full bg-[var(--menu-hover-bg)] flex items-center justify-center mb-6 group-hover:bg-[var(--accent-color)] transition-colors duration-300">
+                            <i class="fas fa-medal text-2xl text-[var(--accent-color)] group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Quality Assured</h3>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
+                            Every single product goes through rigorous safety checks to ensure your pets consume and play with only the best available.
+                        </p>
+                        <a href="#" class="text-[var(--accent-color)] text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                            Learn More <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-[var(--bg-card)] p-8 rounded-2xl shadow-sm border border-[var(--border-color)] hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 rounded-full bg-[var(--menu-hover-bg)] flex items-center justify-center mb-6 group-hover:bg-[var(--accent-color)] transition-colors duration-300">
+                            <i class="fas fa-headset text-2xl text-[var(--accent-color)] group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">24/7 Support</h3>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
+                            Got a question about pet nutrition or an order? Our dedicated support team is available around the clock to assist you.
+                        </p>
+                        <a href="#" class="text-[var(--accent-color)] text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                            Contact Us <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-[var(--bg-card)] p-8 rounded-2xl shadow-sm border border-[var(--border-color)] hover:-translate-y-2 transition-transform duration-300 group">
+                        <div class="w-16 h-16 rounded-full bg-[var(--menu-hover-bg)] flex items-center justify-center mb-6 group-hover:bg-[var(--accent-color)] transition-colors duration-300">
+                            <i class="fas fa-undo-alt text-2xl text-[var(--accent-color)] group-hover:text-white transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Easy Returns</h3>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed mb-6">
+                            Not satisfied? No problem! Return any unused item within 30 days for a full refund, no questions asked, zero hassle.
+                        </p>
+                        <a href="#" class="text-[var(--accent-color)] text-sm font-bold flex items-center gap-2 hover:gap-3 transition-all">
+                            View Returns <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION 2: SHOP BY CATEGORY
+        =============================================== -->
+        <section class="w-full py-24 border-b border-[var(--border-color)] bg-[var(--bg-color)]">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                
+                <!-- Section Header with Button -->
+                <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                    <div>
+                        <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">
+                            Collections
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text-main)]">
+                            Shop by Pet
+                        </h2>
+                    </div>
+                    <a href="services.html" class="btn btn-outline">
+                        View All Categories
+                    </a>
+                </div>
+
+                <!-- Categories Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Category 1: Dogs -->
+                    <a href="#" class="relative block h-80 rounded-2xl overflow-hidden group">
+                        <img src="Images/petimg (3).jpg" alt="Dogs Category" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 transition-transform duration-300 transform group-hover:-translate-y-2">
+                            <h3 class="text-2xl font-bold text-white mb-2">Dogs</h3>
+                            <p class="text-gray-300 text-sm flex items-center gap-2">
+                                420+ Items <i class="fas fa-arrow-right text-[10px]"></i>
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Category 2: Cats -->
+                    <a href="#" class="relative block h-80 rounded-2xl overflow-hidden group">
+                        <img src="Images/petimg (4).jpg" alt="Cats Category" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 transition-transform duration-300 transform group-hover:-translate-y-2">
+                            <h3 class="text-2xl font-bold text-white mb-2">Cats</h3>
+                            <p class="text-gray-300 text-sm flex items-center gap-2">
+                                350+ Items <i class="fas fa-arrow-right text-[10px]"></i>
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Category 3: Birds -->
+                    <a href="#" class="relative block h-80 rounded-2xl overflow-hidden group">
+                        <img src="Images/petimg (5).jpg" alt="Birds Category" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 transition-transform duration-300 transform group-hover:-translate-y-2">
+                            <h3 class="text-2xl font-bold text-white mb-2">Birds</h3>
+                            <p class="text-gray-300 text-sm flex items-center gap-2">
+                                120+ Items <i class="fas fa-arrow-right text-[10px]"></i>
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Category 4: Fishes -->
+                    <a href="#" class="relative block h-80 rounded-2xl overflow-hidden group">
+                        <img src="Images/petimg (6).jpg" alt="Fishes Category" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-8 transition-transform duration-300 transform group-hover:-translate-y-2">
+                            <h3 class="text-2xl font-bold text-white mb-2">Fishes</h3>
+                            <p class="text-gray-300 text-sm flex items-center gap-2">
+                                180+ Items <i class="fas fa-arrow-right text-[10px]"></i>
+                            </p>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION 3: BEST SELLERS (PRODUCTS)
+        =============================================== -->
+        <section class="w-full py-24 border-b border-[var(--border-color)] bg-[var(--bg-secondary)]">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">
+                        Top Rated
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text-main)] mb-6">
+                        Best Selling Products
+                    </h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] rounded-full mx-auto"></div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    
+                    <!-- Product 1 -->
+                    <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                        <div class="relative h-64 overflow-hidden bg-white flex items-center justify-center p-4">
+                            <div class="absolute top-4 left-4 bg-[var(--accent-color)] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full z-10">Sale</div>
+                            <button class="absolute top-4 right-4 w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-colors z-10">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <img src="Images/petimg (7).jpg" alt="Dog Food" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[var(--text-muted)] text-xs uppercase tracking-wide font-bold mb-2">Dog Food</p>
+                            <h3 class="text-lg font-bold text-[var(--text-main)] mb-2 line-clamp-1">Premium Beef Kibble</h3>
+                            <div class="flex items-center gap-1 text-yellow-400 text-xs mb-4">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <span class="text-[var(--text-muted)] ml-1">(42)</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg font-extrabold text-[var(--accent-color)]">$34.99</span>
+                                    <span class="text-sm text-[var(--text-muted)] line-through">$45.00</span>
+                                </div>
+                                <button class="w-10 h-10 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center text-[var(--text-main)] hover:bg-[var(--accent-color)] hover:text-white transition-colors border border-[var(--border-color)]">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                        <div class="relative h-64 overflow-hidden bg-white flex items-center justify-center p-4">
+                            <button class="absolute top-4 right-4 w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:border-red-500 transition-colors z-10">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <img src="Images/petimg (8).jpg" alt="Cat Toy" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[var(--text-muted)] text-xs uppercase tracking-wide font-bold mb-2">Cat Toys</p>
+                            <h3 class="text-lg font-bold text-[var(--text-main)] mb-2 line-clamp-1">Feather Wand Teaser</h3>
+                            <div class="flex items-center gap-1 text-yellow-400 text-xs mb-4">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-[var(--text-muted)] ml-1">(18)</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-lg font-extrabold text-[var(--accent-color)]">$12.50</span>
+                                </div>
+                                <button class="w-10 h-10 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center text-[var(--text-main)] hover:bg-[var(--accent-color)] hover:text-white transition-colors border border-[var(--border-color)]">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 (Repeat styling to fill grid) -->
+                    <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                        <div class="relative h-64 overflow-hidden bg-white flex items-center justify-center p-4">
+                            <img src="Images/petimg (9).jpg" alt="Dog Bed" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[var(--text-muted)] text-xs uppercase tracking-wide font-bold mb-2">Accessories</p>
+                            <h3 class="text-lg font-bold text-[var(--text-main)] mb-2 line-clamp-1">Orthopedic Dog Bed</h3>
+                            <div class="flex items-center gap-1 text-yellow-400 text-xs mb-4">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                <span class="text-[var(--text-muted)] ml-1">(26)</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-extrabold text-[var(--accent-color)]">$59.99</span>
+                                <button class="w-10 h-10 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center text-[var(--text-main)] hover:bg-[var(--accent-color)] hover:text-white transition-colors border border-[var(--border-color)]"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 (Repeat styling to fill grid) -->
+                    <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border-color)] overflow-hidden group hover:shadow-lg transition-shadow duration-300">
+                        <div class="relative h-64 overflow-hidden bg-white flex items-center justify-center p-4">
+                            <div class="absolute top-4 left-4 bg-[var(--text-main)] text-white text-[10px] font-bold uppercase px-3 py-1 rounded-full z-10">New</div>
+                            <img src="Images/petimg (10).jpg" alt="Bird Seed" class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
+                        </div>
+                        <div class="p-6">
+                            <p class="text-[var(--text-muted)] text-xs uppercase tracking-wide font-bold mb-2">Bird Care</p>
+                            <h3 class="text-lg font-bold text-[var(--text-main)] mb-2 line-clamp-1">Nutri-Mix Bird Seed</h3>
+                            <div class="flex items-center gap-1 text-yellow-400 text-xs mb-4">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span class="text-[var(--text-muted)] ml-1">(55)</span>
+                            </div>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-extrabold text-[var(--accent-color)]">$18.00</span>
+                                <button class="w-10 h-10 bg-[var(--bg-secondary)] rounded-full flex items-center justify-center text-[var(--text-main)] hover:bg-[var(--accent-color)] hover:text-white transition-colors border border-[var(--border-color)]"><i class="fas fa-plus"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION 4: TESTIMONIALS (HAPPY PAWS)
+        =============================================== -->
+        <section class="w-full py-24 border-b border-[var(--border-color)] bg-[var(--bg-color)]">
+            <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+                
+                <!-- Section Header -->
+                <div class="text-center mb-16">
+                    <span class="text-[var(--accent-color)] text-xs font-bold uppercase tracking-[0.2em] mb-4 block">
+                        Reviews
+                    </span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text-main)] mb-6">
+                        Happy Paws & People
+                    </h2>
+                    <div class="w-16 h-1 bg-[var(--accent-color)] rounded-full mx-auto"></div>
+                </div>
+
+                <!-- Testimonials Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Review 1 -->
+                    <div class="bg-[var(--bg-card)] p-10 rounded-3xl border border-[var(--border-color)] shadow-sm relative">
+                        <i class="fas fa-quote-left text-4xl text-[var(--menu-hover-bg)] absolute top-8 right-8"></i>
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-6">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-[var(--text-main)] text-base leading-relaxed mb-8 italic">
+                            "PetHaven has completely transformed our dog's diet. The premium kibble we ordered was delivered super fast, and Charlie has never looked healthier. Highly recommended!"
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <img src="Images/petimg (11).jpg" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-[var(--accent-color)]" />
+                            <div>
+                                <h4 class="font-bold text-[var(--text-main)] text-sm">Mark Johnson</h4>
+                                <span class="text-[var(--text-muted)] text-xs">Dog Parent</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="bg-[var(--bg-card)] p-10 rounded-3xl border border-[var(--border-color)] shadow-sm relative">
+                        <i class="fas fa-quote-left text-4xl text-[var(--menu-hover-bg)] absolute top-8 right-8"></i>
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-6">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-[var(--text-main)] text-base leading-relaxed mb-8 italic">
+                            "I love the variety of cat toys they offer! My kitty, Luna, goes crazy for the feather wand. Customer service is fantastic and returns were a breeze when I bought the wrong size collar."
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <img src="Images/petimg (12).jpg" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-[var(--accent-color)]" />
+                            <div>
+                                <h4 class="font-bold text-[var(--text-main)] text-sm">Sarah Williams</h4>
+                                <span class="text-[var(--text-muted)] text-xs">Cat Mom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="bg-[var(--bg-card)] p-10 rounded-3xl border border-[var(--border-color)] shadow-sm relative">
+                        <i class="fas fa-quote-left text-4xl text-[var(--menu-hover-bg)] absolute top-8 right-8"></i>
+                        <div class="flex items-center gap-1 text-yellow-400 text-sm mb-6">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="text-[var(--text-main)] text-base leading-relaxed mb-8 italic">
+                            "Finding good quality bird seed locally is tough. PetHaven always has fresh stock, and their recurring delivery subscription saves me so much time. Amazing store!"
+                        </p>
+                        <div class="flex items-center gap-4">
+                            <img src="Images/petimg (13).jpg" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-[var(--accent-color)]" />
+                            <div>
+                                <h4 class="font-bold text-[var(--text-main)] text-sm">David Chen</h4>
+                                <span class="text-[var(--text-muted)] text-xs">Bird Enthusiast</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ==============================================
+             SECTION 5: NEWSLETTER CTA
+        =============================================== -->
+        <section class="w-full py-24 bg-[var(--bg-secondary)] border-b border-[var(--border-color)] relative overflow-hidden">
+            
+            <!-- Decorative Background Elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-[var(--accent-color)] opacity-[0.05] rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-[var(--accent-color)] opacity-[0.05] rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+            <div class="max-w-[1000px] mx-auto px-6 lg:px-12 relative z-10 text-center">
+                
+                <div class="bg-[var(--bg-card)] border border-[var(--border-color)] rounded-3xl p-10 md:p-16 shadow-lg">
+                    <div class="w-20 h-20 bg-[var(--menu-hover-bg)] rounded-full flex items-center justify-center mx-auto mb-8">
+                        <i class="fas fa-envelope-open-text text-3xl text-[var(--accent-color)]"></i>
+                    </div>
+                    
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-[var(--text-main)] mb-6">
+                        Join Our Pack!
+                    </h2>
+                    <p class="text-[var(--text-muted)] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Subscribe to our newsletter to receive the latest updates on new products, pet care tips, and exclusive discount codes directly to your inbox.
+                    </p>
+                    
+                    <!-- Form -->
+                    <form action="#" method="POST" class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                        <div class="relative flex-1">
+                            <i class="fas fa-envelope absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input 
+                                type="email" 
+                                placeholder="Enter your email address..." 
+                                required
+                                class="w-full pl-12 pr-6 py-4 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-full text-[var(--text-main)] focus:outline-none focus:border-[var(--accent-color)] transition-colors text-sm font-medium"
+                            >
+                        </div>
+                        <button type="submit" class="btn btn-solid !rounded-full !py-4 !px-8 shrink-0">
+                            Subscribe Now
+                        </button>
+                    </form>
+                    
+                    <p class="text-[var(--text-muted)] text-xs mt-6">
+                        By subscribing, you agree to our Terms of Service and Privacy Policy. We never spam.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==============================================
+         5. FOOTER
+    =============================================== -->
+    <footer>
+        <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 pt-4">
+                <div class="lg:col-span-4">
+                    <div class="mb-8">
+                        <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                            <i class="fas fa-paw"></i> PetHaven
+                        </a>
+                    </div>
+                    <p class="opacity-90 leading-relaxed text-sm mb-8 max-w-sm" style="color: var(--text-muted);">
+                        Your one-stop destination for premium pet supplies. We are dedicated to providing top-quality food, engaging toys, and comfortable accessories to ensure your pets live their best lives.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                        <div>
+                            <h4>Store Links</h4>
+                            <ul class="space-y-4">
+                                <li><a href="login.html">Customer Login</a></li>
+                                <li><a href="user.html">My Account</a></li>
+                                <li><a href="pricing.html">Pricing & Plans</a></li>
+                                <li><a href="faq.html">Shipping & FAQ</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Categories</h4>
+                            <ul class="space-y-4">
+                                <li><a href="services.html">Nutritious Food</a></li>
+                                <li><a href="services.html">Toys & Chews</a></li>
+                                <li><a href="services.html">Cozy Beds</a></li>
+                                <li><a href="services.html">Grooming Essentials</a></li>
+                            </ul>
+                        </div>
+                        <div class="sm:col-span-2 md:col-span-1">
+                            <h4>Contact Us</h4>
+                            <ul class="space-y-5 text-[var(--text-muted)] text-sm font-medium">
+                                <li class="flex items-start gap-4"><i class="fas fa-map-marker-alt mt-1 shrink-0" style="color: var(--accent-color);"></i><span>123 Bark Avenue<br>New York, NY 10010</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-phone shrink-0" style="color: var(--accent-color);"></i><a href="tel:+18005557387" class="break-all hover:text-[var(--accent-color)]">1-800-555-PETS</a></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-envelope shrink-0" style="color: var(--accent-color);"></i><a href="contact.html" class="break-all hover:text-[var(--accent-color)]">hello@pethaven.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom flex flex-col md:flex-row justify-between items-center text-xs gap-6 uppercase font-bold tracking-[1px]">
+                <p style="color: var(--text-muted);">&copy; 2026 PetHaven. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-6 sm:gap-8">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Return Policy</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==============================================
+         6. FUNCTIONAL SCRIPTS
+    =============================================== -->
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Drawer Logic
+        const mobileBtn = document.getElementById('mobile-btn'); 
+        const fullscreenMenu = document.getElementById('fullscreen-menu'); 
+        const closeMenu = document.getElementById('close-menu'); 
+        const drawerOverlay = document.getElementById('drawer-overlay');
+        
+        function toggleMenu() { 
+            fullscreenMenu.classList.toggle('active'); 
+            drawerOverlay.classList.toggle('active');
+            document.body.style.overflow = fullscreenMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+        
+        mobileBtn.onclick = toggleMenu; 
+        closeMenu.onclick = toggleMenu; 
+        drawerOverlay.onclick = toggleMenu; 
+        
+        // Theme Toggle Logic
+        const themeDesktop = document.getElementById('theme-toggle-desktop');
+        const themeMobile = document.getElementById('theme-toggle-mobile'); 
+        const theme = localStorage.getItem('theme') || 'light';
+
+        function updateThemeUI(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode'); 
+                if(themeMobile) themeMobile.classList.add('active');
+            } else {
+                document.body.classList.remove('dark-mode');
+                if(themeMobile) themeMobile.classList.remove('active');
+            }
+        }
+        
+        updateThemeUI(theme === 'dark');
+        
+        function toggleTheme() { 
+            const isDark = !document.body.classList.contains('dark-mode');
+            updateThemeUI(isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
+        }
+        
+        themeDesktop.onclick = toggleTheme; 
+        if(themeMobile) themeMobile.onclick = toggleTheme;
+        
+        // RTL Logic
+        const rtlBtn = document.getElementById('rtl-btn'); 
+        const rtlMobile = document.getElementById('rtl-toggle-mobile'); 
+        const dir = localStorage.getItem('dir') || 'ltr';
+        
+        function updateRTLUI(currentDir) {
+            const isRTL = currentDir === 'rtl';
+            if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
+            if (rtlMobile) rtlMobile.innerText = isRTL ? 'RTL' : 'LTR';
+        }
+
+        if (dir === 'rtl') { 
+            document.documentElement.dir = 'rtl'; 
+        }
+        updateRTLUI(dir);
+        
+        function toggleRTL() { 
+            const isRTL = document.documentElement.dir === 'rtl'; 
+            const newDir = isRTL ? 'ltr' : 'rtl';
+            document.documentElement.dir = newDir; 
+            localStorage.setItem('dir', newDir); 
+            updateRTLUI(newDir);
+        }
+        
+        if (rtlBtn) rtlBtn.onclick = toggleRTL; 
+        if (rtlMobile) rtlMobile.onclick = toggleRTL;
+    </script>
+</body>
+</html>
+
+

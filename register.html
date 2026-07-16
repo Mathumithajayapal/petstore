@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - PetHaven</title>
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/194/194279.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                fontFamily: {
+                    display: ['"Quicksand"', 'sans-serif'],
+                    body: ['"Nunito"', 'sans-serif'],
+                },
+                fontWeight: {
+                    regular: '400', medium: '500', semibold: '600', bold: '700', extrabold: '800'
+                }
+            }
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+                /* === CORE THEME VARIABLES === */
+        :root {
+            --bg-color: #FAFAFA; 
+            --bg-secondary: #F4F4F5;
+            --bg-card: #FFFFFF; 
+            --bg-inverted: #111827; 
+            --text-main: #1F2937; 
+            --text-muted: #6B7280;
+            --accent-color: #F97316;
+            --accent-dark: #EA580C;  
+            --border-color: #E5E7EB;
+        }
+
+        body.dark-mode {
+            --bg-color: #000000; 
+            --bg-secondary: #111111; 
+            --bg-card: #1A1A1A; 
+            --bg-inverted: #050505; 
+            --text-main: #F9FAFB; 
+            --text-muted: #9CA3AF;
+            --accent-color: #E5E5E5; 
+            --accent-dark: #A3A3A3; 
+            --border-color: #333333;
+        }
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg-color); color: var(--text-main); }
+        h1, h2, .brand-logo { font-family: 'Quicksand', sans-serif; }
+        .btn { padding: 14px 32px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.4s ease; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50px; }
+        .btn-solid { background: var(--accent-color); color: #FFFFFF !important; }
+        .btn-solid:hover { background: var(--accent-dark); }
+        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color) !important; }
+    
+        .theme-toggle-pill { width: 52px; height: 28px; background: var(--bg-secondary); border-radius: 30px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; border: 1px solid var(--border-color); }
+        .thumb { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); border: 1px solid var(--border-color);}
+        body.dark-mode .thumb { transform: translateX(24px); background: #374151; }
+        
+        /* RTL SUPPORT */
+        [dir="rtl"] { text-align: right; }
+        [dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
+        [dir="rtl"] .mr-auto { margin-left: auto; margin-right: 0; }
+
+        /* Contrast Fixes for Dark Mode Accent Colors */
+        body.dark-mode .btn-solid,
+        body.dark-mode .bg-\[var\(--accent-color\)\] {
+            color: #000000 !important;
+        }
+        body.dark-mode .btn-solid *,
+        body.dark-mode .bg-\[var\(--accent-color\)\] * {
+            color: #000000 !important;
+        }
+        body.dark-mode .btn-outline:hover,
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover {
+            color: #000000 !important;
+        }
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover * {
+            color: #000000 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Controls -->
+    <div class="fixed top-6 right-6 z-50 flex items-center gap-3">
+        <div id="theme-toggle" class="theme-toggle-pill" title="Toggle Dark Mode">
+            <i class="fas fa-sun text-[10px] text-[var(--accent-color)]"></i>
+            <i class="fas fa-moon text-[10px] text-[var(--text-muted)]"></i>
+            <div class="thumb"></div>
+        </div>
+        <button id="rtl-btn" class="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-color)] flex items-center justify-center text-[10px] font-extrabold uppercase text-[var(--text-main)] hover:border-[var(--accent-color)] transition-colors" title="Toggle RTL">
+            LTR
+        </button>
+    </div>
+
+    <main class="w-full min-h-screen flex items-center justify-center p-6 bg-[var(--bg-color)]">
+        <div class="w-full max-w-md bg-[var(--bg-card)] p-8 sm:p-12 shadow-2xl rounded-3xl border border-[var(--border-color)]">
+            
+            <!-- Logo Section - Matching previous site consistency -->
+            <div class="text-center mb-10">
+                <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center justify-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                    <i class="fas fa-paw text-[28px]"></i> PetHaven
+                </a>
+                <h1 class="text-3xl font-extrabold text-[var(--text-main)] mt-8 mb-2">Join Our Pack</h1>
+                <p class="text-[var(--text-muted)] text-sm">Create an account to manage your pets.</p>
+            </div>
+
+            <form action="login.html" method="GET" class="space-y-6">
+                <!-- Name Field -->
+                <div class="relative">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-2">Full Name</label>
+                    <div class="relative flex items-center">
+                        <i class="fas fa-user absolute left-4 text-[var(--text-muted)] opacity-50"></i>
+                        <input type="text" required placeholder="Alex Petlover" 
+                               class="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] py-4 pl-12 pr-4 rounded-xl focus:outline-none focus:border-[var(--accent-color)] text-[var(--text-main)] text-sm font-medium">
+                    </div>
+                </div>
+
+                <!-- Email Field -->
+                <div class="relative">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-2">Email Address</label>
+                    <div class="relative flex items-center">
+                        <i class="fas fa-envelope absolute left-4 text-[var(--text-muted)] opacity-50"></i>
+                        <input type="email" required placeholder="client@example.com" 
+                               class="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] py-4 pl-12 pr-4 rounded-xl focus:outline-none focus:border-[var(--accent-color)] text-[var(--text-main)] text-sm font-medium">
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="relative">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-2">Create Password</label>
+                    <div class="relative flex items-center">
+                        <i class="fas fa-lock absolute left-4 text-[var(--text-muted)] opacity-50"></i>
+                        <input type="password" id="password" required placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" 
+                               class="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] py-4 pl-12 pr-12 rounded-xl focus:outline-none focus:border-[var(--accent-color)] text-[var(--text-main)] text-sm font-medium">
+                        <i class="fas fa-eye absolute right-4 text-[var(--text-muted)] cursor-pointer hover:text-[var(--accent-color)] toggle-password" data-target="password"></i>
+                    </div>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="relative">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] mb-2">Confirm Password</label>
+                    <div class="relative flex items-center">
+                        <i class="fas fa-shield-alt absolute left-4 text-[var(--text-muted)] opacity-50"></i>
+                        <input type="password" id="confirm-password" required placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" 
+                               class="w-full bg-[var(--bg-secondary)] border border-[var(--border-color)] py-4 pl-12 pr-12 rounded-xl focus:outline-none focus:border-[var(--accent-color)] text-[var(--text-main)] text-sm font-medium">
+                        <i class="fas fa-eye absolute right-4 text-[var(--text-muted)] cursor-pointer hover:text-[var(--accent-color)] toggle-password" data-target="confirm-password"></i>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="flex items-start mt-6">
+                    <input type="checkbox" id="terms" class="w-4 h-4 mt-1 rounded border-[var(--border-color)] text-[var(--accent-color)] focus:ring-[var(--accent-color)] cursor-pointer" required>
+                    <label for="terms" class="ml-3 text-sm text-[var(--text-muted)] cursor-pointer leading-tight">
+                        I agree to the <a href="#" class="text-[var(--text-main)] font-bold hover:underline">Terms of Service</a> & <a href="#" class="text-[var(--text-main)] font-bold hover:underline">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-solid w-full !py-4 mt-2 shadow-lg shadow-orange-500/20">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Social Logins -->
+            <div class="mt-8 flex items-center justify-center space-x-4">
+                <div class="h-px bg-[var(--border-color)] flex-1"></div>
+                <span class="text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-bold px-2">Or continue with</span>
+                <div class="h-px bg-[var(--border-color)] flex-1"></div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-2 gap-4">
+                <button type="button" class="flex items-center justify-center gap-2 border border-[var(--border-color)] bg-transparent py-3 rounded-xl hover:bg-[var(--bg-secondary)] transition-all text-[var(--text-main)] text-xs font-bold uppercase tracking-widest">
+                    <i class="fab fa-google text-sm"></i> Google
+                </button>
+                <button type="button" class="flex items-center justify-center gap-2 border border-[var(--border-color)] bg-transparent py-3 rounded-xl hover:bg-[var(--bg-secondary)] transition-all text-[var(--text-main)] text-xs font-bold uppercase tracking-widest">
+                    <i class="fab fa-apple text-lg"></i> Apple
+                </button>
+            </div>
+
+            <!-- Footer Login Link -->
+            <div class="mt-10 pt-8 border-t border-[var(--border-color)] text-center">
+                <p class="text-sm text-[var(--text-muted)]">
+                    Already have an account? 
+                    <a href="login.html" class="text-[var(--accent-color)] font-bold hover:underline ml-1">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+        }
+        if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+
+        // RTL Logic
+        const rtlBtn = document.getElementById('rtl-btn'); 
+        const dir = localStorage.getItem('dir') || 'ltr';
+        
+        function updateRTLUI(currentDir) {
+            const isRTL = currentDir === 'rtl';
+            if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
+        }
+
+        if (dir === 'rtl') { 
+            document.documentElement.dir = 'rtl'; 
+        }
+        updateRTLUI(dir);
+        
+        if (rtlBtn) {
+            rtlBtn.onclick = function() { 
+                const isRTL = document.documentElement.dir === 'rtl'; 
+                const newDir = isRTL ? 'ltr' : 'rtl';
+                document.documentElement.dir = newDir; 
+                localStorage.setItem('dir', newDir); 
+                updateRTLUI(newDir);
+            };
+        }
+
+        // Password Visibility Toggle Logic
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const input = document.getElementById(this.getAttribute('data-target'));
+                input.type = input.type === 'password' ? 'text' : 'password';
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
+</body>
+</html>
+
