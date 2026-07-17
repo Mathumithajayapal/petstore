@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
@@ -90,10 +90,12 @@
             color: #000000 !important;
         }
         body.dark-mode .btn-outline:hover,
-        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover {
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover,
+        body.dark-mode .hover\:bg-\[var\(--accent-color\)\]:hover {
             color: #000000 !important;
         }
-        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover * {
+        body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover *,
+        body.dark-mode .hover\:bg-\[var\(--accent-color\)\]:hover * {
             color: #000000 !important;
         }
 
@@ -239,6 +241,7 @@
         }
         .sidebar-link:hover { background: var(--menu-hover-bg); color: var(--accent-color); padding-left: 28px; }
         .sidebar-link.active { background: var(--accent-color); color: white; box-shadow: 0 4px 15px -5px var(--accent-color); }
+        body.dark-mode .sidebar-link.active { color: #000000 !important; }
         [dir="rtl"] .sidebar-link:hover { padding-left: 20px; padding-right: 28px; }
         
         /* Floating Search Input Focus */
@@ -380,7 +383,7 @@
     <main class="w-full bg-[var(--bg-color)] pb-20">
 
         <!-- Floating Search & Quick Tags -->
-        <section class="max-w-[900px] mx-auto px-6 relative z-20 -mt-10 mb-16">
+        <section class="max-w-[900px] mx-auto px-6 relative z-20 mt-12 mb-16">
             <div class="search-container bg-[var(--bg-card)] p-2 md:p-3 rounded-full shadow-xl shadow-black/10 border border-[var(--border-color)] flex items-center transition-all duration-300">
                 <i class="fas fa-search text-[var(--text-muted)] ml-5 text-lg"></i>
                 <input type="text" placeholder="Type your question here..." class="w-full bg-transparent border-none px-4 py-3 focus:outline-none text-[var(--text-main)] font-semibold placeholder:font-normal">
@@ -388,9 +391,9 @@
             </div>
             
             <div class="flex justify-center gap-3 mt-6 flex-wrap">
-                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent">ðŸ¶ Food & Diet</span>
-                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent">ðŸ“¦ Shipping Info</span>
-                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent">ðŸ”„ Easy Returns</span>
+                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent">Food & Diet</span>
+                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent"> Shipping Info</span>
+                <span class="px-4 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] text-[var(--text-main)] rounded-full text-xs font-bold uppercase tracking-widest cursor-pointer hover:bg-[var(--accent-color)] hover:text-white transition-colors hover:border-transparent">Easy Returns</span>
             </div>
         </section>
 
