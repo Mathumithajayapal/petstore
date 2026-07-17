@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,208 +10,523 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-    tailwind.config = {
-        theme: {
-        extend: {
-            fontFamily: {
-            display: ['"Quicksand"', 'sans-serif'],
-            body: ['"Nunito"', 'sans-serif'],
-            },
-            fontWeight: {
-            regular: '400',
-            medium: '500',
-            semibold: '600',
-            bold: '700',
-            extrabold: '800'
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Quicksand"', 'sans-serif'],
+                        body: ['"Nunito"', 'sans-serif'],
+                    },
+                    fontWeight: {
+                        regular: '400',
+                        medium: '500',
+                        semibold: '600',
+                        bold: '700',
+                        extrabold: '800'
+                    }
+                }
             }
         }
-        }
-    }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Playful, modern fonts suitable for a pet shop -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Quicksand:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         /* === RESET & CORE === */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; overflow-x: hidden; }
-        
-        body { 
-            font-family: 'Nunito', sans-serif; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             transition: background-color 0.4s ease, color 0.4s ease;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4, h5, h6, .brand-logo {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .brand-logo {
             font-family: 'Quicksand', sans-serif;
         }
 
         /* === THEME VARIABLES (Pet Shop Palette) === */
         :root {
-            --bg-color: #FAFAFA; 
-            --bg-secondary: #F3F4F6; 
-            --bg-card: #FFFFFF; 
-            --bg-inverted: #1F2937; 
-            --text-main: #1F2937; 
+            --bg-color: #FAFAFA;
+            --bg-secondary: #F3F4F6;
+            --bg-card: #FFFFFF;
+            --bg-inverted: #1F2937;
+            --text-main: #1F2937;
             --text-muted: #6B7280;
-            --accent-color: #F97316; /* Vibrant Orange */
-            --accent-dark: #EA580C;  
+            --accent-color: #F97316;
+            /* Vibrant Orange */
+            --accent-dark: #EA580C;
             --border-color: #E5E7EB;
             --nav-bg: #FAFAFA;
             --drawer-bg: rgba(250, 250, 250, 0.98);
-            --menu-hover-bg: rgba(249, 115, 22, 0.08); 
+            --menu-hover-bg: rgba(249, 115, 22, 0.08);
         }
 
         /* DARK MODE */
         body.dark-mode {
-            --bg-color: #000000; 
-            --bg-secondary: #111111; 
-            --bg-card: #1A1A1A; 
-            --bg-inverted: #050505; 
-            --text-main: #F9FAFB; 
+            --bg-color: #000000;
+            --bg-secondary: #111111;
+            --bg-card: #1A1A1A;
+            --bg-inverted: #050505;
+            --text-main: #F9FAFB;
             --text-muted: #9CA3AF;
-            --accent-color: #E5E5E5; 
-            --accent-dark: #A3A3A3; 
+            --accent-color: #E5E5E5;
+            --accent-dark: #A3A3A3;
             --border-color: #333333;
             --nav-bg: #000000;
             --drawer-bg: rgba(0, 0, 0, 0.98);
-            --menu-hover-bg: rgba(255, 255, 255, 0.1); 
+            --menu-hover-bg: rgba(255, 255, 255, 0.1);
         }
-        
+
         /* Contrast Fixes for Dark Mode Accent Colors */
         body.dark-mode .btn-solid,
         body.dark-mode .bg-\[var\(--accent-color\)\] {
             color: #000000 !important;
         }
+
         body.dark-mode .btn-solid *,
         body.dark-mode .bg-\[var\(--accent-color\)\] * {
             color: #000000 !important;
         }
+
         body.dark-mode .btn-outline:hover,
         body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover {
             color: #000000 !important;
         }
+
         body.dark-mode .hover\:\!bg-\[var\(--accent-color\)\]:hover * {
             color: #000000 !important;
         }
 
         /* RTL SUPPORT */
-        [dir="rtl"] { text-align: right; }
-        [dir="rtl"] .ml-auto { margin-right: auto; margin-left: 0; }
-        [dir="rtl"] .mr-auto { margin-left: auto; margin-right: 0; }
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
 
         @keyframes subtleZoom {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1.08);
+            }
         }
-        .animate-zoom { animation: subtleZoom 25s infinite alternate ease-in-out; }
+
+        .animate-zoom {
+            animation: subtleZoom 25s infinite alternate ease-in-out;
+        }
 
         /* === NAVBAR DESIGN === */
-        .navbar { 
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-            background: var(--nav-bg); 
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
             border-bottom: 1px solid var(--border-color);
-            padding: 0 32px; height: 90px; display: flex; align-items: center;
+            padding: 0 32px;
+            height: 90px;
+            display: flex;
+            align-items: center;
             transition: all 0.5s ease;
         }
 
-        .navbar.scrolled { 
+        .navbar.scrolled {
             height: 75px;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
             background: var(--drawer-bg);
             backdrop-filter: blur(10px);
         }
-        body.dark-mode .navbar.scrolled { box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8); }
-        
-        .nav-link { 
-            position: relative; padding: 10px 20px; margin: 0 4px; color: var(--text-main); 
-            text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase;
-            letter-spacing: 1px; transition: all 0.3s ease; display: inline-flex; 
-            align-items: center; justify-content: center; gap: 6px; cursor: pointer;
+
+        body.dark-mode .navbar.scrolled {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
         }
-        
+
+        .nav-link {
+            position: relative;
+            padding: 10px 20px;
+            margin: 0 4px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
         /* Playful Underline Effect */
-        .nav-link::after { 
-            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 3px; border-radius: 3px;
-            background: var(--accent-color); transition: all 0.3s ease; transform: translateX(-50%);
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            border-radius: 3px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
-        .nav-link:hover::after, .nav-link.active::after { width: 60%; }
-        .nav-link:hover, .nav-link.active { color: var(--accent-color); }
-        
-        .dropdown { position: relative; display: flex; align-items: center; height: 100%; }
-        .dropdown-menu { position: absolute; top: 70px; left: 0; transform: translateY(15px); opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 100; }
-        .navbar.scrolled .dropdown-menu { top: 60px; }
-        .dropdown-inner { 
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
-            min-width: 220px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08); 
-            padding: 8px 0; display: flex; flex-direction: column; overflow: hidden;
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 60%;
         }
-        body.dark-mode .dropdown-inner { box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6); }
-        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-        
-        .dropdown-item { 
-            display: block; padding: 12px 24px; color: var(--text-main); text-decoration: none; 
-            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; 
-            transition: all 0.3s; text-align: left; white-space: nowrap; 
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-color);
         }
-        .dropdown-item:hover { background: var(--menu-hover-bg); color: var(--accent-color); padding-left: 28px; }
-        [dir="rtl"] .dropdown-item:hover { padding-left: 24px; padding-right: 28px; }
+
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            transform: translateY(15px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .navbar.scrolled .dropdown-menu {
+            top: 60px;
+        }
+
+        .dropdown-inner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            min-width: 220px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            padding: 8px 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        body.dark-mode .dropdown-inner {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 24px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .dropdown-item:hover {
+            background: var(--menu-hover-bg);
+            color: var(--accent-color);
+            padding-left: 28px;
+        }
+
+        [dir="rtl"] .dropdown-item:hover {
+            padding-left: 24px;
+            padding-right: 28px;
+        }
 
         /* PILL TOGGLE */
-        .theme-toggle-pill { width: 52px; height: 28px; background: var(--bg-secondary); border-radius: 30px; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 0 6px; border: 1px solid var(--border-color); }
-        .theme-toggle-pill i { font-size: 10px; z-index: 1; }
-        .theme-toggle-pill .fa-sun { color: #F97316; }
-        .theme-toggle-pill .fa-moon { color: #6B7280; }
-        .theme-toggle-pill .thumb { position: absolute; top: 2px; left: 2px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 2; border: 1px solid var(--border-color);}
-        body.dark-mode .theme-toggle-pill .thumb { transform: translateX(24px); background: #374151; border-color: var(--border-color); }
+        .theme-toggle-pill {
+            width: 52px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-toggle-pill i {
+            font-size: 10px;
+            z-index: 1;
+        }
+
+        .theme-toggle-pill .fa-sun {
+            color: #F97316;
+        }
+
+        .theme-toggle-pill .fa-moon {
+            color: #6B7280;
+        }
+
+        .theme-toggle-pill .thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            border: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .theme-toggle-pill .thumb {
+            transform: translateX(24px);
+            background: #374151;
+            border-color: var(--border-color);
+        }
 
         /* RTL BUTTON STYLE */
         .rtl-btn-style {
-            width: 44px; height: 28px; background: var(--bg-secondary); border-radius: 6px; border: 1px solid var(--border-color);
-            display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; cursor: pointer;
-            color: var(--text-main); transition: all 0.3s ease; font-family: 'Nunito', sans-serif;
+            width: 44px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            font-family: 'Nunito', sans-serif;
         }
-        .rtl-btn-style:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+
+        .rtl-btn-style:hover {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
 
         /* === BUTTON DESIGN === */
-        .btn { 
-            padding: 14px 32px; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; 
-            transition: all 0.4s ease; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; 
-            border: 2px solid transparent; border-radius: 50px; font-family: 'Nunito', sans-serif;
+        .btn {
+            padding: 14px 32px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
         }
-        .btn-solid { background: var(--accent-color); color: #FFFFFF !important; }
-        .btn-solid:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 10px 20px -10px var(--accent-color); }
-        .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-main); }
-        .btn-outline:hover { border-color: var(--accent-color); color: var(--accent-color) !important; transform: translateY(-2px); }
+
+        .btn-solid {
+            background: var(--accent-color);
+            color: #FFFFFF !important;
+        }
+
+        .btn-solid:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--accent-color);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color) !important;
+            transform: translateY(-2px);
+        }
 
         /* MOBILE OVERLAY & DRAWER */
-        .drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(4px); }
-        .drawer-overlay.active { opacity: 1; visibility: visible; }
-
-        .fullscreen-menu { 
-            position: fixed; top: 0; right: 0; width: 100%; max-width: 420px; height: 100dvh; background: var(--drawer-bg); z-index: 1001; display: flex; flex-direction: column; 
-            opacity: 0; visibility: hidden; transform: translateX(100%); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-left: 1px solid var(--border-color);
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(4px);
         }
-        [dir="rtl"] .fullscreen-menu { right: auto; left: 0; transform: translateX(-100%); border-left: none; border-right: 1px solid var(--border-color); }
-        .fullscreen-menu.active { opacity: 1; visibility: visible; transform: translateX(0); }
-        
-        .mobile-link { display: block; width: 100%; padding: 18px 32px; font-size: 1.1rem; font-family: 'Quicksand', sans-serif; font-weight: 700; color: var(--text-main); text-decoration: none; transition: all 0.3s; border-bottom: 1px solid var(--border-color); }
-        .mobile-link:hover { color: var(--accent-color); padding-left: 40px; background: var(--menu-hover-bg); }
-        [dir="rtl"] .mobile-link:hover { padding-left: 32px; padding-right: 40px; }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100dvh;
+            background: var(--drawer-bg);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid var(--border-color);
+        }
+
+        [dir="rtl"] .fullscreen-menu {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .mobile-link {
+            display: block;
+            width: 100%;
+            padding: 18px 32px;
+            font-size: 1.1rem;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-link:hover {
+            color: var(--accent-color);
+            padding-left: 40px;
+            background: var(--menu-hover-bg);
+        }
+
+        [dir="rtl"] .mobile-link:hover {
+            padding-left: 32px;
+            padding-right: 40px;
+        }
 
         /* FOOTER */
-        footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding-top: 80px; }
-        footer h4 { color: var(--text-main); font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 24px; } 
-        footer a, footer li, footer span { color: var(--text-muted); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; font-weight: 500; }
-        footer a:hover { color: var(--accent-color); }
-        .social-link-circle { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: var(--text-main); background: var(--bg-card); }
-        .social-link-circle:hover { background: var(--accent-color); border-color: var(--accent-color); color: #FFFFFF; transform: translateY(-3px); }
-        .footer-bottom { border-top: 1px solid var(--border-color); padding: 32px 0; margin-top: 60px; }
+        footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding-top: 80px;
+        }
+
+        footer h4 {
+            color: var(--text-main);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+        }
+
+        footer a,
+        footer li,
+        footer span {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-link-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: var(--text-main);
+            background: var(--bg-card);
+        }
+
+        .social-link-circle:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #FFFFFF;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding: 32px 0;
+            margin-top: 60px;
+        }
     </style>
 </head>
+
 <body>
 
     <!-- ==============================================
@@ -219,11 +535,13 @@
     <nav class="navbar" id="main-nav">
         <div class="w-full flex items-center justify-between max-w-[1440px] mx-auto">
             <div class="flex items-center">
-                <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                <a href="index.html"
+                    class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2"
+                    style="color: var(--accent-color) !important; text-decoration: none;">
                     <i class="fas fa-paw text-[28px]"></i> PetHaven
                 </a>
             </div>
-            
+
             <div class="hidden xl:flex justify-center items-center flex-1">
                 <div class="dropdown">
                     <div class="nav-link">Home <i class="fas fa-chevron-down text-[10px] ml-1 opacity-80"></i></div>
@@ -244,7 +562,8 @@
 
             <div class="hidden xl:flex items-center gap-5">
                 <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
-                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div>
+                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
+                    <div class="thumb"></div>
                 </div>
                 <button id="rtl-btn" class="rtl-btn-style" title="Toggle LTR/RTL">LTR</button>
                 <div class="w-px h-6 bg-[var(--border-color)] mx-1"></div>
@@ -252,7 +571,8 @@
             </div>
 
             <div class="xl:hidden flex items-center justify-end gap-4">
-                <button id="mobile-btn" class="text-2xl text-[var(--text-main)] transition-colors hover:text-[var(--accent-color)]">
+                <button id="mobile-btn"
+                    class="text-2xl text-[var(--text-main)] transition-colors hover:text-[var(--accent-color)]">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -266,14 +586,16 @@
 
     <div class="fullscreen-menu" id="fullscreen-menu">
         <div class="w-full px-8 py-8 flex justify-between items-center shrink-0 border-b border-[var(--border-color)]">
-            <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+            <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2"
+                style="color: var(--accent-color) !important; text-decoration: none;">
                 <i class="fas fa-paw"></i> PetHaven
             </a>
-            <button id="close-menu" class="w-10 h-10 flex items-center justify-center transition-all text-2xl text-[var(--text-main)] hover:text-[var(--accent-color)]">
+            <button id="close-menu"
+                class="w-10 h-10 flex items-center justify-center transition-all text-2xl text-[var(--text-main)] hover:text-[var(--accent-color)]">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        
+
         <div class="flex flex-col w-full overflow-y-auto flex-1 py-4">
             <a href="index.html" class="mobile-link">Home Page 1</a>
             <a href="home-2.html" class="mobile-link">Home Page 2</a>
@@ -283,14 +605,18 @@
             <a href="blog.html" class="mobile-link">Blog</a>
             <a href="faq.html" class="mobile-link">FAQ</a>
             <a href="contact.html" class="mobile-link">Contact</a>
-            
+
         </div>
 
-        <div class="w-full px-8 py-8 border-t border-[var(--border-color)] flex flex-col gap-6 shrink-0 bg-[var(--bg-secondary)]">
+        <div
+            class="w-full px-8 py-8 border-t border-[var(--border-color)] flex flex-col gap-6 shrink-0 bg-[var(--bg-secondary)]">
             <div class="flex justify-between items-center w-full">
                 <div class="flex items-center gap-3">
                     <span class="text-[var(--text-muted)] font-bold text-[11px] uppercase tracking-widest">Theme</span>
-                    <div id="theme-toggle-mobile" class="theme-toggle-pill"><i class="fas fa-sun"></i><i class="fas fa-moon"></i><div class="thumb"></div></div>
+                    <div id="theme-toggle-mobile" class="theme-toggle-pill"><i class="fas fa-sun"></i><i
+                            class="fas fa-moon"></i>
+                        <div class="thumb"></div>
+                    </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <span class="text-[var(--text-muted)] font-bold text-[11px] uppercase tracking-widest">Dir</span>
@@ -307,28 +633,34 @@
     <!-- ==============================================
          3. HERO BANNER
     =============================================== -->
-    <section class="relative w-full h-[100dvh] pt-20 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)]">
+    <section
+        class="relative w-full h-[100dvh] pt-20 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)]">
         <div class="absolute inset-0 z-0 bg-black">
             <!-- Customized Hero Image for index.html -->
-            <img src="Images/petimg (1).jpg" alt="Cute pets" class="w-full h-full object-cover animate-zoom opacity-60" />
+            <img src="Images/petimg (1).jpg" alt="Cute pets"
+                class="w-full h-full object-cover animate-zoom opacity-60" />
             <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-[var(--bg-color)]"></div>
         </div>
 
-        <div class="max-w-[1000px] mx-auto px-6 w-full flex flex-col items-center justify-center text-center relative z-10 mt-12">
+        <div
+            class="max-w-[1000px] mx-auto px-6 w-full flex flex-col items-center justify-center text-center relative z-10 mt-12">
             <!-- Customized Content for index.html -->
-            <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-6 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
+            <span
+                class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-6 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20">
                 <i class="fas fa-info-circle mr-2 text-[12px]"></i> Our Story
             </span>
-            
+
             <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-8 text-white drop-shadow-lg">
                 About <br class="hidden sm:block"> <span class="text-[var(--accent-color)]">PetHaven</span>
             </h1>
-            
+
             <p class="text-gray-200 text-lg md:text-xl leading-relaxed max-w-2xl font-medium mb-12 drop-shadow-md">
-                We are a team of dedicated pet lovers committed to providing the highest quality products and care for your beloved furry family members.
+                We are a team of dedicated pet lovers committed to providing the highest quality products and care for
+                your beloved furry family members.
             </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto"><a href="contact.html" class="btn btn-solid !py-4 !px-12 text-[14px]">Contact Us</a></div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-6 w-full sm:w-auto"><a href="contact.html"
+                    class="btn btn-solid !py-4 !px-12 text-[14px]">Contact Us</a></div>
         </div>
     </section>
 
@@ -344,32 +676,48 @@
         <section class="w-full py-24 border-b border-[var(--border-color)] overflow-hidden">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    <div class="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-8 border-[var(--bg-card)]">
+                    <div
+                        class="relative w-full aspect-square md:aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border-8 border-[var(--bg-card)]">
                         <img src="Images/petimg (2).jpg" alt="Happy Dog" class="w-full h-full object-cover">
-                        <div class="absolute -bottom-6 -right-6 w-48 h-48 bg-[var(--accent-color)] rounded-full -z-10 blur-2xl opacity-50"></div>
-                        <div class="absolute top-6 left-6 bg-white/90 backdrop-blur text-[var(--text-main)] p-4 rounded-xl shadow-lg border border-[var(--border-color)]">
+                        <div
+                            class="absolute -bottom-6 -right-6 w-48 h-48 bg-[var(--accent-color)] rounded-full -z-10 blur-2xl opacity-50">
+                        </div>
+                        <div
+                            class="absolute top-6 left-6 bg-white/90 backdrop-blur text-[var(--text-main)] p-4 rounded-xl shadow-lg border border-[var(--border-color)]">
                             <p class="text-3xl font-extrabold text-[var(--accent-color)]">10+</p>
                             <p class="text-sm font-bold uppercase tracking-wider">Years of Love</p>
                         </div>
                     </div>
                     <div class="flex flex-col items-start justify-center">
-                        <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                        <span
+                            class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                             <i class="fas fa-bullseye"></i> Our Mission
                         </span>
-                        <h2 class="text-4xl md:text-5xl font-extrabold text-[var(--text-main)] mb-6 leading-tight">Enriching the lives of <br><span class="text-[var(--accent-color)]">pets & their people.</span></h2>
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-[var(--text-main)] mb-6 leading-tight">
+                            Enriching the lives of <br><span class="text-[var(--accent-color)]">pets & their
+                                people.</span></h2>
                         <div class="w-20 h-1 bg-[var(--accent-color)] rounded-full mb-8"></div>
                         <p class="text-[var(--text-muted)] text-lg leading-relaxed mb-6 font-medium">
-                            At PetHaven, we believe that pets make us better humans. That’s why we’ve dedicated our lives to creating a haven where you can find the highest quality, most reliable products for your furry, feathery, and scaly friends.
+                            At PetHaven, we believe that pets make us better humans. That’s why we’ve dedicated our
+                            lives to creating a haven where you can find the highest quality, most reliable products for
+                            your furry, feathery, and scaly friends.
                         </p>
                         <p class="text-[var(--text-muted)] text-lg leading-relaxed mb-8 font-medium">
-                            From organic nutrition to interactive playthings, every item on our shelves is rigorously tested by our in-house experts. 
+                            From organic nutrition to interactive playthings, every item on our shelves is rigorously
+                            tested by our in-house experts.
                         </p>
                         <ul class="flex flex-col gap-4 mb-10 w-full">
-                            <li class="flex items-center gap-4 text-[var(--text-main)] font-bold bg-[var(--bg-card)] p-4 rounded-lg border border-[var(--border-color)] shadow-sm">
-                                <span class="w-8 h-8 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] flex items-center justify-center shrink-0"><i class="fas fa-check"></i></span> Premium Quality Guaranteed
+                            <li
+                                class="flex items-center gap-4 text-[var(--text-main)] font-bold bg-[var(--bg-card)] p-4 rounded-lg border border-[var(--border-color)] shadow-sm">
+                                <span
+                                    class="w-8 h-8 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] flex items-center justify-center shrink-0"><i
+                                        class="fas fa-check"></i></span> Premium Quality Guaranteed
                             </li>
-                            <li class="flex items-center gap-4 text-[var(--text-main)] font-bold bg-[var(--bg-card)] p-4 rounded-lg border border-[var(--border-color)] shadow-sm">
-                                <span class="w-8 h-8 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] flex items-center justify-center shrink-0"><i class="fas fa-check"></i></span> Expert Vet Approvals
+                            <li
+                                class="flex items-center gap-4 text-[var(--text-main)] font-bold bg-[var(--bg-card)] p-4 rounded-lg border border-[var(--border-color)] shadow-sm">
+                                <span
+                                    class="w-8 h-8 rounded-full bg-[var(--accent-color)]/10 text-[var(--accent-color)] flex items-center justify-center shrink-0"><i
+                                        class="fas fa-check"></i></span> Expert Vet Approvals
                             </li>
                         </ul>
                         <a href="services.html" class="btn btn-solid shadow-lg">Discover Our Products</a>
@@ -385,43 +733,58 @@
         <section class="w-full py-24 bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="text-center mb-16 max-w-2xl mx-auto">
-                    <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">What Drives Us</span>
+                    <span
+                        class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">What
+                        Drives Us</span>
                     <h2 class="text-4xl md:text-5xl font-extrabold text-[var(--text-main)] mb-6">Our Core Values</h2>
                     <div class="w-16 h-1 bg-[var(--accent-color)] rounded-full mx-auto mb-6"></div>
-                    <p class="text-[var(--text-muted)] text-lg font-medium">We stand by principles that prioritize the health, safety, and happiness of your pets above everything else.</p>
+                    <p class="text-[var(--text-muted)] text-lg font-medium">We stand by principles that prioritize the
+                        health, safety, and happiness of your pets above everything else.</p>
                 </div>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
-                        <div class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+                    <div
+                        class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
                             <i class="fas fa-heartbeat"></i>
                         </div>
                         <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Health First</h3>
-                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">We only source products with highly nutritious, pet-safe ingredients to ensure long-term vitality.</p>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">We only source products
+                            with highly nutritious, pet-safe ingredients to ensure long-term vitality.</p>
                     </div>
-                    
-                    <div class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
-                        <div class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+
+                    <div
+                        class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
                             <i class="fas fa-leaf"></i>
                         </div>
                         <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Eco-Friendly</h3>
-                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Committed to sustainability through biodegradable packaging and ethically sourced toys.</p>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Committed to
+                            sustainability through biodegradable packaging and ethically sourced toys.</p>
                     </div>
-                    
-                    <div class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
-                        <div class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+
+                    <div
+                        class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
                             <i class="fas fa-hands-helping"></i>
                         </div>
                         <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Community</h3>
-                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Actively partnering with local shelters to foster, rescue, and rehabilitate pets in need.</p>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Actively partnering with
+                            local shelters to foster, rescue, and rehabilitate pets in need.</p>
                     </div>
-                    
-                    <div class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
-                        <div class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
+
+                    <div
+                        class="bg-[var(--bg-card)] p-8 border border-[var(--border-color)] rounded-2xl shadow-sm text-center flex flex-col items-center hover:-translate-y-2 transition-transform duration-300 group">
+                        <div
+                            class="w-16 h-16 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center text-2xl mb-6 shadow-md group-hover:scale-110 transition-transform">
                             <i class="fas fa-medal"></i>
                         </div>
                         <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Transparency</h3>
-                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Honest pricing and clear ingredient lists. No hidden fillers, no compromises on quality.</p>
+                        <p class="text-[var(--text-muted)] text-sm leading-relaxed font-medium">Honest pricing and clear
+                            ingredient lists. No hidden fillers, no compromises on quality.</p>
                     </div>
                 </div>
             </div>
@@ -435,54 +798,87 @@
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                     <div>
-                        <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">The Faces Behind PetHaven</span>
+                        <span
+                            class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">The
+                            Faces Behind PetHaven</span>
                         <h2 class="text-4xl md:text-5xl font-extrabold text-[var(--text-main)]">Meet Our Experts</h2>
                     </div>
                     <a href="contact.html" class="btn btn-outline shadow-sm">Join Our Team</a>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow">
+                    <div
+                        class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow">
                         <div class="h-64 w-full overflow-hidden relative">
-                            <img src="Images/pexels-silverkblack-36765988.jpg" alt="Dr. Sarah Jenkins" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
-                                <a href="#" class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i class="fab fa-twitter"></i></a>
+                            <img src="Images/pexels-silverkblack-36765988.jpg" alt="Dr. Sarah Jenkins"
+                                class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i
+                                        class="fab fa-twitter"></i></a>
                             </div>
                         </div>
                         <div class="p-8 text-center bg-[var(--bg-card)]">
                             <h3 class="text-2xl font-bold text-[var(--text-main)] mb-1">Dr. Sarah Jenkins</h3>
-                            <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Lead Veterinarian</span>
-                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">With over 15 years in animal medicine, Dr. Jenkins curates our health products to ensure your pets receive clinical-grade care.</p>
+                            <span
+                                class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Lead
+                                Veterinarian</span>
+                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">With over 15 years in
+                                animal medicine, Dr. Jenkins curates our health products to ensure your pets receive
+                                clinical-grade care.</p>
                         </div>
                     </div>
-                    
-                    <div class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow">
+
+                    <div
+                        class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow">
                         <div class="h-64 w-full overflow-hidden relative">
-                            <img src="Images/pexels-yankrukov-7693717.jpg" alt="Mark Thompson" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
-                                <a href="#" class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i class="fab fa-facebook-f"></i></a>
+                            <img src="Images/pexels-yankrukov-7693717.jpg" alt="Mark Thompson"
+                                class="w-full h-full object-cover object-[50%_25%] transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i
+                                        class="fab fa-instagram"></i></a>
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i
+                                        class="fab fa-facebook-f"></i></a>
                             </div>
                         </div>
                         <div class="p-8 text-center bg-[var(--bg-card)]">
                             <h3 class="text-2xl font-bold text-[var(--text-main)] mb-1">Mark Thompson</h3>
-                            <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Master Groomer</span>
-                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">A certified grooming artist, Mark ensures every product in our spa collection is gentle, effective, and beautifully scented.</p>
+                            <span
+                                class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Master
+                                Groomer</span>
+                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">A certified grooming
+                                artist, Mark ensures every product in our spa collection is gentle, effective, and
+                                beautifully scented.</p>
                         </div>
                     </div>
-                    
-                    <div class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow sm:col-span-2 lg:col-span-1">
+
+                    <div
+                        class="bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-color)] group hover:shadow-xl transition-shadow sm:col-span-2 lg:col-span-1">
                         <div class="h-64 w-full overflow-hidden relative">
-                            <img src="Images/pexels-yankrukov-7698817.jpg" alt="Elena Rodriguez" class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
-                                <a href="#" class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i class="fab fa-linkedin-in"></i></a>
+                            <img src="Images/pexels-yankrukov-7698817.jpg" alt="Elena Rodriguez"
+                                class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6 gap-4">
+                                <a href="#"
+                                    class="w-10 h-10 rounded-full bg-[var(--accent-color)] text-white flex items-center justify-center hover:bg-white hover:text-[var(--accent-color)] transition-colors"><i
+                                        class="fab fa-linkedin-in"></i></a>
                             </div>
                         </div>
                         <div class="p-8 text-center bg-[var(--bg-card)]">
                             <h3 class="text-2xl font-bold text-[var(--text-main)] mb-1">Elena Rodriguez</h3>
-                            <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Store Founder</span>
-                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">Elena founded PetHaven with a simple vision: a centralized hub where pet lovers can find reliable, loving care and supplies.</p>
+                            <span
+                                class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-widest block mb-4">Store
+                                Founder</span>
+                            <p class="text-[var(--text-muted)] text-sm font-medium line-clamp-3">Elena founded PetHaven
+                                with a simple vision: a centralized hub where pet lovers can find reliable, loving care
+                                and supplies.</p>
                         </div>
                     </div>
                 </div>
@@ -493,14 +889,15 @@
              SECTION 4: OUR JOURNEY
              Vertical timeline showing the store's history
         =============================================== -->
-       <!-- ==============================================
+        <!-- ==============================================
              SECTION 4: OUR JOURNEY (FIXED LAYOUT)
              Vertical timeline showing the store's history
         =============================================== -->
         <section class="w-full py-24 bg-[var(--bg-secondary)] border-b border-[var(--border-color)]">
             <div class="max-w-[1000px] mx-auto px-6 lg:px-12">
                 <div class="text-center mb-16">
-                    <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">Milestones</span>
+                    <span
+                        class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4 block">Milestones</span>
                     <h2 class="text-4xl md:text-5xl font-extrabold text-[var(--text-main)] mb-6">Our Journey So Far</h2>
                     <div class="w-16 h-1 bg-[var(--accent-color)] rounded-full mx-auto"></div>
                 </div>
@@ -508,44 +905,52 @@
                 <!-- Timeline Container -->
                 <div class="relative w-full">
                     <!-- Vertical Line (Centers perfectly on desktop, aligns start on mobile) -->
-                    <div class="absolute top-0 bottom-0 w-1 bg-[var(--border-color)] start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 rounded-full z-0"></div>
-                    
+                    <div
+                        class="absolute top-0 bottom-0 w-1 bg-[var(--border-color)] start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 rounded-full z-0">
+                    </div>
+
                     <!-- Timeline Item 1 (Content on Left) -->
                     <div class="relative flex flex-col md:flex-row items-center justify-between w-full mb-12 group">
                         <!-- Dot -->
-                        <div class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent-color)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center">
+                        <div
+                            class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--accent-color)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center">
                             <div class="w-2 h-2 bg-white rounded-full"></div>
                         </div>
-                        
+
                         <!-- Content (Left) -->
                         <div class="w-full md:w-[45%] ps-14 md:ps-0 text-start md:text-end">
-                            <div class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
+                            <div
+                                class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
                                 <span class="text-[var(--accent-color)] font-extrabold text-xl mb-2 block">2014</span>
                                 <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">The Humble Beginnings</h3>
-                                <p class="text-[var(--text-muted)] text-sm font-medium">PetHaven started as a small local boutique in New York, offering curated handmade toys and organic treats.</p>
+                                <p class="text-[var(--text-muted)] text-sm font-medium">PetHaven started as a small
+                                    local boutique in New York, offering curated handmade toys and organic treats.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Empty Spacer (Right) -->
                         <div class="hidden md:block md:w-[45%]"></div>
                     </div>
-                    
+
                     <!-- Timeline Item 2 (Content on Right) -->
                     <div class="relative flex flex-col md:flex-row items-center justify-between w-full mb-12 group">
                         <!-- Dot -->
-                        <div class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--text-muted)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center group-hover:bg-[var(--accent-color)] transition-colors">
+                        <div
+                            class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--text-muted)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center group-hover:bg-[var(--accent-color)] transition-colors">
                             <div class="w-2 h-2 bg-white rounded-full"></div>
                         </div>
-                        
+
                         <!-- Empty Spacer (Left) -->
                         <div class="hidden md:block md:w-[45%]"></div>
-                        
+
                         <!-- Content (Right) -->
                         <div class="w-full md:w-[45%] ps-14 md:ps-0 text-start">
-                            <div class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
+                            <div
+                                class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
                                 <span class="text-[var(--accent-color)] font-extrabold text-xl mb-2 block">2018</span>
                                 <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">First Major Expansion</h3>
-                                <p class="text-[var(--text-muted)] text-sm font-medium">We opened 3 new physical locations and launched our first online portal to serve pet parents nationwide.</p>
+                                <p class="text-[var(--text-muted)] text-sm font-medium">We opened 3 new physical
+                                    locations and launched our first online portal to serve pet parents nationwide.</p>
                             </div>
                         </div>
                     </div>
@@ -553,19 +958,23 @@
                     <!-- Timeline Item 3 (Content on Left) -->
                     <div class="relative flex flex-col md:flex-row items-center justify-between w-full group">
                         <!-- Dot -->
-                        <div class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--text-muted)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center group-hover:bg-[var(--accent-color)] transition-colors">
+                        <div
+                            class="absolute start-4 md:start-1/2 transform -translate-x-1/2 rtl:translate-x-1/2 w-8 h-8 rounded-full bg-[var(--text-muted)] border-4 border-[var(--bg-secondary)] shadow-md z-10 flex items-center justify-center group-hover:bg-[var(--accent-color)] transition-colors">
                             <div class="w-2 h-2 bg-white rounded-full"></div>
                         </div>
-                        
+
                         <!-- Content (Left) -->
                         <div class="w-full md:w-[45%] ps-14 md:ps-0 text-start md:text-end">
-                            <div class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
+                            <div
+                                class="bg-[var(--bg-card)] p-6 rounded-2xl border border-[var(--border-color)] shadow-sm group-hover:shadow-md transition-shadow group-hover:border-[var(--accent-color)]">
                                 <span class="text-[var(--accent-color)] font-extrabold text-xl mb-2 block">2024</span>
                                 <h3 class="text-xl font-bold text-[var(--text-main)] mb-3">Veterinary Integration</h3>
-                                <p class="text-[var(--text-muted)] text-sm font-medium">Partnered with top vets to launch our in-house line of clinical-grade nutrition and specialized grooming services.</p>
+                                <p class="text-[var(--text-muted)] text-sm font-medium">Partnered with top vets to
+                                    launch our in-house line of clinical-grade nutrition and specialized grooming
+                                    services.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Empty Spacer (Right) -->
                         <div class="hidden md:block md:w-[45%]"></div>
                     </div>
@@ -579,39 +988,57 @@
         <section class="w-full py-24 bg-[var(--bg-inverted)] relative overflow-hidden">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="flex flex-col items-center text-center mb-16">
-                    <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Behind The Scenes</span>
+                    <span class="text-[var(--accent-color)] text-sm font-bold uppercase tracking-[0.2em] mb-4">Behind
+                        The Scenes</span>
                     <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-6">Our Happy Community</h2>
-                    <p class="text-gray-400 text-lg max-w-2xl font-medium">A glimpse into daily life at PetHaven. Follow us on social media and tag your pets for a chance to be featured!</p>
+                    <p class="text-gray-400 text-lg max-w-2xl font-medium">A glimpse into daily life at PetHaven. Follow
+                        us on social media and tag your pets for a chance to be featured!</p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
                     <!-- Large Feature Image -->
-                    <div class="col-span-2 row-span-2 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
-                        <img src="Images/petimg (6).jpg" alt="Dog in Store" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <div
+                        class="col-span-2 row-span-2 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
+                        <img src="Images/petimg (6).jpg" alt="Dog in Store"
+                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                             <i class="fab fa-instagram text-white text-3xl mb-2"></i>
                             <span class="text-white font-bold text-lg">@PetHavenStore</span>
                         </div>
                     </div>
                     <!-- Standard Image -->
-                    <div class="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
-                        <img src="Images/petimg (7).jpg" alt="Cat playing" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white"><i class="fas fa-heart text-2xl text-[var(--accent-color)]"></i></div>
+                    <div
+                        class="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
+                        <img src="Images/petimg (7).jpg" alt="Cat playing"
+                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+                            <i class="fas fa-heart text-2xl text-[var(--accent-color)]"></i></div>
                     </div>
                     <!-- Standard Image -->
-                    <div class="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
-                        <img src="Images/petimg (8).jpg" alt="Store Aisle" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white"><i class="fas fa-search text-2xl"></i></div>
+                    <div
+                        class="col-span-1 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
+                        <img src="Images/petimg (8).jpg" alt="Store Aisle"
+                            class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+                            <i class="fas fa-search text-2xl"></i></div>
                     </div>
                     <!-- Wide Image -->
-                    <div class="col-span-2 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
-                        <img src="Images/petimg (9).jpg" alt="Vet Care" class="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white"><i class="fas fa-search text-2xl"></i></div>
+                    <div
+                        class="col-span-2 row-span-1 relative group overflow-hidden rounded-2xl border border-[var(--border-color)]/20 cursor-pointer">
+                        <img src="Images/petimg (9).jpg" alt="Vet Care"
+                            class="w-full h-full object-cover object-center transition-transform duration-1000 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white">
+                            <i class="fas fa-search text-2xl"></i></div>
                     </div>
                 </div>
-                
+
                 <div class="mt-12 text-center">
-                    <a href="#" class="btn btn-outline !border-white !text-white hover:!bg-white hover:!text-black">View Full Gallery</a>
+                    <a href="#" class="btn btn-outline !border-white !text-white hover:!bg-white hover:!text-black">View
+                        Full Gallery</a>
                 </div>
             </div>
         </section>
@@ -626,12 +1053,15 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 pt-4">
                 <div class="lg:col-span-4">
                     <div class="mb-8">
-                        <a href="index.html" class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2" style="color: var(--accent-color) !important; text-decoration: none;">
+                        <a href="index.html"
+                            class="text-2xl brand-logo font-extrabold tracking-wide block flex items-center gap-2"
+                            style="color: var(--accent-color) !important; text-decoration: none;">
                             <i class="fas fa-paw"></i> PetHaven
                         </a>
                     </div>
                     <p class="opacity-90 leading-relaxed text-sm mb-8 max-w-sm" style="color: var(--text-muted);">
-                        Your one-stop destination for premium pet supplies. We are dedicated to providing top-quality food, engaging toys, and comfortable accessories to ensure your pets live their best lives.
+                        Your one-stop destination for premium pet supplies. We are dedicated to providing top-quality
+                        food, engaging toys, and comfortable accessories to ensure your pets live their best lives.
                     </p>
                     <div class="flex space-x-4">
                         <a href="#" class="social-link-circle"><i class="fab fa-instagram"></i></a>
@@ -639,7 +1069,7 @@
                         <a href="#" class="social-link-circle"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
-                
+
                 <div class="lg:col-span-8">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
                         <div>
@@ -663,16 +1093,23 @@
                         <div class="sm:col-span-2 md:col-span-1">
                             <h4>Contact Us</h4>
                             <ul class="space-y-5 text-[var(--text-muted)] text-sm font-medium">
-                                <li class="flex items-start gap-4"><i class="fas fa-map-marker-alt mt-1 shrink-0" style="color: var(--accent-color);"></i><span>123 Bark Avenue<br>New York, NY 10010</span></li>
-                                <li class="flex items-center gap-4"><i class="fas fa-phone shrink-0" style="color: var(--accent-color);"></i><a href="tel:+18005557387" class="break-all hover:text-[var(--accent-color)]">1-800-555-PETS</a></li>
-                                <li class="flex items-center gap-4"><i class="fas fa-envelope shrink-0" style="color: var(--accent-color);"></i><a href="contact.html" class="break-all hover:text-[var(--accent-color)]">hello@pethaven.com</a></li>
+                                <li class="flex items-start gap-4"><i class="fas fa-map-marker-alt mt-1 shrink-0"
+                                        style="color: var(--accent-color);"></i><span>123 Bark Avenue<br>New York, NY
+                                        10010</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-phone shrink-0"
+                                        style="color: var(--accent-color);"></i><a href="tel:+18005557387"
+                                        class="break-all hover:text-[var(--accent-color)]">1-800-555-PETS</a></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-envelope shrink-0"
+                                        style="color: var(--accent-color);"></i><a href="contact.html"
+                                        class="break-all hover:text-[var(--accent-color)]">hello@pethaven.com</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="footer-bottom flex flex-col md:flex-row justify-between items-center text-xs gap-6 uppercase font-bold tracking-[1px]">
+            <div
+                class="footer-bottom flex flex-col md:flex-row justify-between items-center text-xs gap-6 uppercase font-bold tracking-[1px]">
                 <p style="color: var(--text-muted);">&copy; 2026 PetHaven. All rights reserved.</p>
                 <div class="flex flex-wrap justify-center gap-6 sm:gap-8">
                     <a href="#">Terms of Service</a>
@@ -698,75 +1135,74 @@
         });
 
         // Mobile Drawer Logic
-        const mobileBtn = document.getElementById('mobile-btn'); 
-        const fullscreenMenu = document.getElementById('fullscreen-menu'); 
-        const closeMenu = document.getElementById('close-menu'); 
+        const mobileBtn = document.getElementById('mobile-btn');
+        const fullscreenMenu = document.getElementById('fullscreen-menu');
+        const closeMenu = document.getElementById('close-menu');
         const drawerOverlay = document.getElementById('drawer-overlay');
-        
-        function toggleMenu() { 
-            fullscreenMenu.classList.toggle('active'); 
+
+        function toggleMenu() {
+            fullscreenMenu.classList.toggle('active');
             drawerOverlay.classList.toggle('active');
             document.body.style.overflow = fullscreenMenu.classList.contains('active') ? 'hidden' : 'auto';
         }
-        
-        mobileBtn.onclick = toggleMenu; 
-        closeMenu.onclick = toggleMenu; 
-        drawerOverlay.onclick = toggleMenu; 
-        
+
+        mobileBtn.onclick = toggleMenu;
+        closeMenu.onclick = toggleMenu;
+        drawerOverlay.onclick = toggleMenu;
+
         // Theme Toggle Logic
         const themeDesktop = document.getElementById('theme-toggle-desktop');
-        const themeMobile = document.getElementById('theme-toggle-mobile'); 
+        const themeMobile = document.getElementById('theme-toggle-mobile');
         const theme = localStorage.getItem('theme') || 'light';
 
         function updateThemeUI(isDark) {
             if (isDark) {
-                document.body.classList.add('dark-mode'); 
-                if(themeMobile) themeMobile.classList.add('active');
+                document.body.classList.add('dark-mode');
+                if (themeMobile) themeMobile.classList.add('active');
             } else {
                 document.body.classList.remove('dark-mode');
-                if(themeMobile) themeMobile.classList.remove('active');
+                if (themeMobile) themeMobile.classList.remove('active');
             }
         }
-        
+
         updateThemeUI(theme === 'dark');
-        
-        function toggleTheme() { 
+
+        function toggleTheme() {
             const isDark = !document.body.classList.contains('dark-mode');
             updateThemeUI(isDark);
-            localStorage.setItem('theme', isDark ? 'dark' : 'light'); 
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
-        
-        themeDesktop.onclick = toggleTheme; 
-        if(themeMobile) themeMobile.onclick = toggleTheme;
-        
+
+        themeDesktop.onclick = toggleTheme;
+        if (themeMobile) themeMobile.onclick = toggleTheme;
+
         // RTL Logic
-        const rtlBtn = document.getElementById('rtl-btn'); 
-        const rtlMobile = document.getElementById('rtl-toggle-mobile'); 
+        const rtlBtn = document.getElementById('rtl-btn');
+        const rtlMobile = document.getElementById('rtl-toggle-mobile');
         const dir = localStorage.getItem('dir') || 'ltr';
-        
+
         function updateRTLUI(currentDir) {
             const isRTL = currentDir === 'rtl';
             if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
             if (rtlMobile) rtlMobile.innerText = isRTL ? 'RTL' : 'LTR';
         }
 
-        if (dir === 'rtl') { 
-            document.documentElement.dir = 'rtl'; 
+        if (dir === 'rtl') {
+            document.documentElement.dir = 'rtl';
         }
         updateRTLUI(dir);
-        
-        function toggleRTL() { 
-            const isRTL = document.documentElement.dir === 'rtl'; 
+
+        function toggleRTL() {
+            const isRTL = document.documentElement.dir === 'rtl';
             const newDir = isRTL ? 'ltr' : 'rtl';
-            document.documentElement.dir = newDir; 
-            localStorage.setItem('dir', newDir); 
+            document.documentElement.dir = newDir;
+            localStorage.setItem('dir', newDir);
             updateRTLUI(newDir);
         }
-        
-        if (rtlBtn) rtlBtn.onclick = toggleRTL; 
+
+        if (rtlBtn) rtlBtn.onclick = toggleRTL;
         if (rtlMobile) rtlMobile.onclick = toggleRTL;
     </script>
 </body>
+
 </html>
-
-
